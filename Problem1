@@ -1,0 +1,71 @@
+
+    #space=O(1)
+    #timme=O(logn)
+
+'''approach:
+perforn 2 binary search 1 on left side occurence
+2 on right side occouence
+find mid immidiately check if next or before element is not target
+return mid
+'''
+
+class Solution:
+    def searchRange(self, nums: List[int], target: int) -> List[int]:
+        if not nums or nums is None:
+            return [-1, -1]
+
+        def binary_search_first(nums, target):
+            low = 0
+            high = len(nums) - 1
+
+            while low <= high:
+                mid = (low + high) // 2
+
+                if nums[mid] == target:
+                    if mid == 0 or nums[mid - 1] != target:
+                        return mid
+                    else:
+                        high = mid - 1
+                elif target > nums[mid]:
+                    low = mid + 1
+                else:
+                    high = mid - 1
+
+            return -1
+
+        def binary_search_last(nums, target):
+            low = 0
+            high = len(nums) - 1
+
+            while low <= high:
+                mid = (low + high) // 2
+
+                if nums[mid] == target:
+                    if mid == len(nums) - 1 or nums[mid + 1] != target:
+                        return mid
+                    else:
+                        low = mid + 1
+                elif target > nums[mid]:
+                    low = mid + 1
+                else:
+                    high = mid - 1
+
+            return -1
+
+        first_BS = binary_search_first(nums, target)
+        if first_BS == -1:
+            return [-1, -1]
+
+        second_BS = binary_search_last(nums, target)
+        return [first_BS, second_BS]
+
+        
+
+'''
+Some constraints:
+- If we reach index 0 and we perform 0-1, it causes an array index out of bounds.
+- The same issue occurs at the nth position when we perform 0+1.
+'''
+#erroe at while low<=high
+
+# unterminated string literal - error at cmt
