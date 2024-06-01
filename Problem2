@@ -1,0 +1,42 @@
+class Solution:
+    # TC O(log n)
+    # SC O(1)
+    def findMin(self, nums: List[int]) -> int:
+        # if TC O(LOG n) use Binary Search
+        # if 1st < last then it's sorted
+
+        #atleast 1 side defineatly sorted
+        '''
+        check if sorted
+        then check if mid is smaller than left and right
+        else change low and high accordingly
+        '''
+
+        if nums is None or len(nums) == 0:
+            return -1
+
+        low = 0
+        high = len(nums) - 1
+
+        while low <= high:
+            if nums[low] <= nums[high]: #for 1 element we use =
+                return nums[low]
+            
+            mid = (low + high) // 2
+            
+            # Check if the mid element is the minimum
+            if nums[mid - 1] > nums[mid] and  nums[mid] < nums[mid + 1]:
+                return nums[mid]
+            
+            # Determine which side to search next
+            if nums[low] <=nums[mid]:  #for 2 elements we use =
+                # The left side is sorted, so the minimum is in the right side
+                low = mid + 1
+            else:
+                # The right side is sorted, so the minimum is in the left side
+                high = mid - 1
+        
+        return -1
+
+       #error array index = h=len(n)-1
+       #nums[loe]< = nums[high] for a[0] indices
